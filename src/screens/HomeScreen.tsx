@@ -1,4 +1,72 @@
 import React from 'react';
+import { View, Text, FlatList, StyleSheet } from 'react-native';
+import TaskForm from '../components/TaskForm';
+import TaskItem from '../components/TaskItem';
+import { useTasks } from '../context/TaskContext';
+
+const HomeScreen = () => {
+  const { tasks, addTask, toggleTask, deleteTask } = useTasks();
+
+  return (
+    <View style={styles.container}>
+      <View style={styles.header}>
+        <Text style={styles.title}>My Task Manager</Text>
+      </View>
+
+      <View style={styles.body}>
+        <TaskForm onAddTask={addTask} />
+        <FlatList
+          data={tasks}
+          keyExtractor={(item) => item.id}
+          renderItem={({ item }) => (
+            <TaskItem task={item} onToggle={toggleTask} onDelete={deleteTask} />
+          )}
+          ListEmptyComponent={<Text style={styles.emptyText}>No tasks added yet!</Text>}
+          contentContainerStyle={{ paddingBottom: 20 }}
+        />
+      </View>
+    </View>
+  );
+};
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+  },
+  header: {
+    flex: 1,
+    backgroundColor: '#4B6CB7', // nice blue-purple
+    justifyContent: 'center',
+    alignItems: 'center',
+    paddingHorizontal: 16,
+  },
+  title: {
+    color: 'white',
+    fontSize: 28,
+    fontWeight: 'bold',
+  },
+  body: {
+    flex: 2,
+    backgroundColor: '#F5F7FF', // very light lavender
+    paddingHorizontal: 20,
+    paddingTop: 20,
+  },
+  emptyText: {
+    textAlign: 'center',
+    color: '#999',
+    marginTop: 40,
+    fontSize: 16,
+  },
+});
+
+export default HomeScreen;
+
+
+
+
+
+
+/*import React from 'react';
 import { View, FlatList, Text, StyleSheet } from 'react-native';
 import TaskForm from '../components/TaskForm';
 import TaskItem from '../components/TaskItem';
@@ -30,7 +98,43 @@ const styles = StyleSheet.create({
   },
 });
 
-export default HomeScreen;
+export default HomeScreen;*/
+
+
+
+/*import React from 'react';
+import { View, FlatList, Text, StyleSheet } from 'react-native';
+import TaskForm from '../components/TaskForm';
+import TaskItem from '../components/TaskItem';
+import { useTasks } from '../context/TaskContext';
+
+const HomeScreen = () => {
+  const { tasks, addTask, toggleTask, deleteTask } = useTasks();
+
+  return (
+    <View style={styles.container}>
+      <TaskForm onAddTask={addTask} />
+      <FlatList
+        data={tasks}
+        keyExtractor={(item) => item.id}
+        renderItem={({ item }) => (
+          <TaskItem task={item} onToggle={toggleTask} onDelete={deleteTask} />
+        )}
+        ListEmptyComponent={<Text>No tasks added yet!</Text>}
+      />
+    </View>
+  );
+};
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    padding: 16,
+    marginTop: 30,
+  },
+});
+
+export default HomeScreen;*/
 
 
 
