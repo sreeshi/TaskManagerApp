@@ -1,4 +1,19 @@
 import React from 'react';
+import { View } from 'react-native';
+import HomeScreen from './src/screens/HomeScreen';
+import { TaskProvider } from './src/context/TaskContext';
+
+export default function App() {
+  return (
+    <TaskProvider>
+      <HomeScreen />
+    </TaskProvider>
+  );
+}
+
+
+
+/*import React from 'react';
 import { SafeAreaView, StyleSheet } from 'react-native';
 import HomeScreen from './src/screens/HomeScreen';
 
@@ -16,7 +31,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
   },
-});
+});*/
 
 
 
