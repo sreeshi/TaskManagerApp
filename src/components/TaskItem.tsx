@@ -1,4 +1,49 @@
 import React from 'react';
+import { View, Text, Button, StyleSheet, TouchableOpacity } from 'react-native';
+import { Task } from '../types/Task';
+
+interface Props {
+  task: Task;
+  onToggle: (id: string) => void;
+  onDelete: (id: string) => void;
+}
+
+const TaskItem: React.FC<Props> = ({ task, onToggle, onDelete }) => {
+  return (
+    <View style={styles.item}>
+      <TouchableOpacity onPress={() => onToggle(task.id)} style={{ flex: 1 }}>
+        <Text style={[styles.text, task.completed && styles.completed]}>
+          {task.title} (Priority: {task.priority})
+        </Text>
+      </TouchableOpacity>
+      <Button title="Delete" onPress={() => onDelete(task.id)} />
+    </View>
+  );
+};
+
+const styles = StyleSheet.create({
+  item: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginBottom: 8,
+    padding: 10,
+    borderWidth: 1,
+    borderColor: '#ccc',
+    borderRadius: 5,
+  },
+  text: {
+    fontSize: 16,
+  },
+  completed: {
+    textDecorationLine: 'line-through',
+    color: 'gray',
+  },
+});
+
+export default TaskItem;
+
+
+/*import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 import { Task } from '../types/Task';
 
@@ -32,7 +77,7 @@ const styles = StyleSheet.create({
   },
 });
 
-export default TaskItem;
+export default TaskItem;*/
 
 
 

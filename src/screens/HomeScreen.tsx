@@ -1,4 +1,40 @@
-import React, { useState } from 'react';
+import React from 'react';
+import { View, FlatList, Text, StyleSheet } from 'react-native';
+import TaskForm from '../components/TaskForm';
+import TaskItem from '../components/TaskItem';
+import { useTasks } from '../context/TaskContext';
+
+const HomeScreen = () => {
+  const { tasks, addTask, toggleTask, deleteTask } = useTasks();
+
+  return (
+    <View style={styles.container}>
+      <TaskForm onAddTask={addTask} />
+      <FlatList
+        data={tasks}
+        keyExtractor={(item) => item.id}
+        renderItem={({ item }) => (
+          <TaskItem task={item} onToggle={toggleTask} onDelete={deleteTask} />
+        )}
+        ListEmptyComponent={<Text>No tasks added yet!</Text>}
+      />
+    </View>
+  );
+};
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    padding: 16,
+    marginTop: 30,
+  },
+});
+
+export default HomeScreen;
+
+
+
+/*import React, { useState } from 'react';
 import { View, FlatList, Text, StyleSheet } from 'react-native';
 import TaskForm from '../components/TaskForm';
 import TaskItem from '../components/TaskItem';
@@ -41,7 +77,7 @@ const styles = StyleSheet.create({
   },
 });
 
-export default HomeScreen;
+export default HomeScreen;*/
 
 
 
