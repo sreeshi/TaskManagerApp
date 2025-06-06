@@ -1,4 +1,27 @@
-import { StatusBar } from 'expo-status-bar';
+import React from 'react';
+import { SafeAreaView, StyleSheet } from 'react-native';
+import HomeScreen from './src/screens/HomeScreen';
+
+const App: React.FC = () => {
+  return (
+    <SafeAreaView style={styles.container}>
+      <HomeScreen />
+    </SafeAreaView>
+  );
+};
+
+export default App;
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+  },
+});
+
+
+
+
+/*import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View } from 'react-native';
 
 export default function App() {
@@ -17,4 +40,4 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
-});
+});*/
