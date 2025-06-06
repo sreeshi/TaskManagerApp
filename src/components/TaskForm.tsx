@@ -1,4 +1,92 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { View, TextInput, Button, Text, StyleSheet } from 'react-native';
+
+interface TaskFormProps {
+  onAddTask: (title: string, priority: number) => void;
+}
+
+const TaskForm: React.FC<TaskFormProps> = ({ onAddTask }) => {
+  const [title, setTitle] = useState('');
+  const [priority, setPriority] = useState('');
+  const [errors, setErrors] = useState<{ title?: string; priority?: string }>({});
+  const [isValid, setIsValid] = useState(false);
+
+  // Validate form whenever title or priority changes
+  useEffect(() => {
+    const newErrors: { title?: string; priority?: string } = {};
+
+    if (!title.trim()) {
+      newErrors.title = 'Title is required';
+    } else if (title.trim().length < 3) {
+      newErrors.title = 'Title must be at least 3 characters';
+    }
+
+    const priorityNum = Number(priority);
+    if (!priority) {
+      newErrors.priority = 'Priority is required';
+    } else if (isNaN(priorityNum) || priorityNum < 1 || priorityNum > 5) {
+      newErrors.priority = 'Priority must be a number between 1 and 5';
+    }
+
+    setErrors(newErrors);
+    setIsValid(Object.keys(newErrors).length === 0);
+  }, [title, priority]);
+
+  const handleAdd = () => {
+    if (!isValid) return;
+
+    onAddTask(title.trim(), Number(priority));
+    setTitle('');
+    setPriority('');
+  };
+
+  return (
+    <View style={styles.container}>
+      <TextInput
+        style={styles.input}
+        placeholder="Task Title"
+        value={title}
+        onChangeText={setTitle}
+      />
+      {errors.title && <Text style={styles.error}>{errors.title}</Text>}
+
+      <TextInput
+        style={styles.input}
+        placeholder="Priority (1-5)"
+        keyboardType="numeric"
+        value={priority}
+        onChangeText={setPriority}
+      />
+      {errors.priority && <Text style={styles.error}>{errors.priority}</Text>}
+
+      <Button title="Add Task" onPress={handleAdd} disabled={!isValid} />
+    </View>
+  );
+};
+
+const styles = StyleSheet.create({
+  container: {
+    marginBottom: 16,
+  },
+  input: {
+    borderWidth: 1,
+    borderColor: '#999',
+    padding: 8,
+    marginBottom: 4,
+    borderRadius: 4,
+  },
+  error: {
+    color: 'red',
+    marginBottom: 4,
+  },
+});
+
+export default TaskForm;
+
+
+
+
+/*import React, { useState } from 'react';
 import { View, TextInput, Button, StyleSheet } from 'react-native';
 
 interface Props {
@@ -43,4 +131,4 @@ const styles = StyleSheet.create({
     padding: 8,
     borderRadius: 5,
   },
-});
+});*/

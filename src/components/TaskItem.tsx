@@ -1,4 +1,42 @@
 import React from 'react';
+import { View, Text, StyleSheet } from 'react-native';
+import { Task } from '../types/Task';
+
+interface TaskItemProps {
+  task: Task;
+}
+
+const TaskItem: React.FC<TaskItemProps> = ({ task }) => {
+  return (
+    <View style={styles.container}>
+      <Text style={styles.title}>{task.title}</Text>
+      <Text style={styles.priority}>Priority: {task.priority}</Text>
+    </View>
+  );
+};
+
+const styles = StyleSheet.create({
+  container: {
+    backgroundColor: '#eee',
+    padding: 12,
+    marginVertical: 6,
+    borderRadius: 8,
+  },
+  title: {
+    fontSize: 16,
+    fontWeight: 'bold',
+  },
+  priority: {
+    fontSize: 14,
+    color: '#555',
+  },
+});
+
+export default TaskItem;
+
+
+
+/*import React from 'react';
 import { View, Text, Button, StyleSheet } from 'react-native';
 import { Task } from '../types/Task';
 
@@ -41,4 +79,4 @@ const styles = StyleSheet.create({
     fontSize: 16,
     flex: 1,
   },
-});
+});*/

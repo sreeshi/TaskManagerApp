@@ -1,4 +1,45 @@
 import React, { useState } from 'react';
+import { View, FlatList, Text, StyleSheet } from 'react-native';
+import TaskForm from '../components/TaskForm';
+import TaskItem from '../components/TaskItem';
+import { Task } from '../types/Task';
+import uuid from 'react-native-uuid';
+
+const HomeScreen = () => {
+  const [tasks, setTasks] = useState<Task[]>([]);
+
+  const addTask = (title: string, priority: number) => {
+    const newTask: Task = {
+      id: uuid.v4().toString(),
+      title,
+      priority,
+      completed: false,
+    };
+    setTasks((prevTasks) => [newTask, ...prevTasks]);
+  };
+
+  return (
+    <View style={styles.container}>
+      <TaskForm onAddTask={addTask} />
+      <FlatList
+        data={tasks}
+        keyExtractor={(item) => item.id}
+        renderItem={({ item }) => <TaskItem task={item} />}
+        ListEmptyComponent={<Text>No tasks yet. Add some!</Text>}
+      />
+    </View>
+  );
+};
+
+const styles = StyleSheet.create({
+  container: { flex: 1, padding: 16 },
+});
+
+export default HomeScreen;
+
+
+
+/*import React, { useState } from 'react';
 import { View, FlatList, StyleSheet } from 'react-native';
 import { Task } from '../types/Task';
 import TaskForm from '../components/TaskForm';
@@ -53,4 +94,4 @@ const styles = StyleSheet.create({
     padding: 20,
     backgroundColor: '#fff',
   },
-});
+});*/
